@@ -1,26 +1,27 @@
 {
-  "name": "example-basic",
-  "type": "module",
-  "scripts": {
-    "dev": "vite dev",
-    "build": "vite build",
-    "start": "vite start",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@libsql/client": "^0.17.3",
-    "@solidjs/meta": "^0.29.4",
-    "@solidjs/router": "^0.15.0",
-    "@solidjs/start": "2.0.0-alpha.2",
-    "@solidjs/vite-plugin-nitro-2": "^0.1.0",
-    "drizzle-orm": "^0.45.2",
-    "solid-js": "^1.9.5",
-    "vite": "^7.0.0"
-  },
-  "engines": {
-    "node": ">=22"
-  },
-  "devDependencies": {
-    "drizzle-kit": "^0.31.10"
-  }
+	"name": "example-basic",
+	"type": "module",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"start": "vite start",
+		"preview": "vite preview"
+	},
+	"dependencies": {
+		"@libsql/client": "^0.17.3",
+		"@solidjs/meta": "^0.29.4",
+		"@solidjs/router": "^0.15.0",
+		"@solidjs/start": "2.0.0-alpha.2",
+		"@solidjs/vite-plugin-nitro-2": "^0.1.0",
+		"drizzle-orm": "^0.45.2",
+		"solid-js": "^1.9.5",
+		"vite": "^7.0.0"
+	},
+	"engines": {
+		"node": ">=22"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.4.13",
+		"drizzle-kit": "^0.31.10"
+	}
 }

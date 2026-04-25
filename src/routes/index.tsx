@@ -5,58 +5,65 @@ import { toggleLike } from "~/lib/likes";
 import { getCurrentUser, logout } from "~/lib/auth";
 
 export default function Home() {
-  const posts = createAsync(() => getPosts());
-  const currentUser = createAsync(() => getCurrentUser());
-  const createPostAction = useAction(createPost);
-  const deletePostAction = useAction(deletePost);
-  const toggleLikeAction = useAction(toggleLike);
-  const logoutAction = useAction(logout);
+	const posts = createAsync(() => getPosts());
+	const currentUser = createAsync(() => getCurrentUser());
+	const createPostAction = useAction(createPost);
+	const deletePostAction = useAction(deletePost);
+	const toggleLikeAction = useAction(toggleLike);
+	const logoutAction = useAction(logout);
 
-  let contentInput!: HTMLTextAreaElement;
+	let contentInput!: HTMLTextAreaElement;
 
-  const handleCreatePost = async () => {
-    const content = contentInput.value.trim();
-    if (!content) return;
-    await createPostAction(content);
-    contentInput.value = "";
-  };
+	const handleCreatePost = async () => {
+		const content = contentInput.value.trim();
+		if (!content) return;
+		await createPostAction(content);
+		contentInput.value = "";
+	};
 
-  return (
-    <div>
-      <Suspense>
-        <Show when={currentUser()} fallback={<a href="/login">ログイン</a>}>
-          <div>
-            <span>{currentUser()?.name}</span>
-            <button onClick={() => logoutAction()}>ログアウト</button>
-          </div>
-        </Show>
-      </Suspense>
+	return (
+		<div>
+			<Suspense>
+				<Show when={currentUser()} fallback={<a href="/login">ログイン</a>}>
+					<div>
+						<span>{currentUser()?.name}</span>
+						<button onClick={() => logoutAction()}>ログアウト</button>
+					</div>
+				</Show>
+			</Suspense>
 
-      <Suspense>
-        <Show when={currentUser()}>
-          <div>
-            <textarea ref={contentInput} placeholder="いまなにしてる？" />
-            <button onClick={handleCreatePost}>投稿</button>
-          </div>
-        </Show>
-      </Suspense>
+			<Suspense>
+				<Show when={currentUser()}>
+					<div>
+						<textarea ref={contentInput} placeholder="いまなにしてる？" />
+						<button onClick={handleCreatePost}>投稿</button>
+					</div>
+				</Show>
+			</Suspense>
 
-      <Suspense fallback={<p>Loading...</p>}>
-        <For each={posts()}>
-          {(post) => (
-            <div class="post-card" classList={{ "post-liked": !!post.likedByMe }}>
-              <p>{post.userName}</p>
-              <p>{post.content}</p>
-              <button class="like-button" classList={{ liked: !!post.likedByMe }} onClick={() => toggleLikeAction(post.id)}>
-                {post.likedByMe ? "いいねを取り消す" : "いいね"}
-              </button>
-              <Show when={currentUser()?.id === post.userId}>
-                <button onClick={() => deletePostAction(post.id)}>削除</button>
-              </Show>
-            </div>
-          )}
-        </For>
-      </Suspense>
-    </div>
-  );
+			<Suspense fallback={<p>Loading...</p>}>
+				<For each={posts()}>
+					{(post) => (
+						<div
+							class="post-card"
+							classList={{ "post-liked": !!post.likedByMe }}
+						>
+							<p>{post.userName}</p>
+							<p>{post.content}</p>
+							<button
+								class="like-button"
+								classList={{ liked: !!post.likedByMe }}
+								onClick={() => toggleLikeAction(post.id)}
+							>
+								{post.likedByMe ? "いいねを取り消す" : "いいね"}
+							</button>
+							<Show when={currentUser()?.id === post.userId}>
+								<button onClick={() => deletePostAction(post.id)}>削除</button>
+							</Show>
+						</div>
+					)}
+				</For>
+			</Suspense>
+		</div>
+	);
 }
