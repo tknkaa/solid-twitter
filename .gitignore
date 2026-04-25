@@ -1,3 +1,4 @@
+.nitro
 local.db
 dist
 .wrangler
