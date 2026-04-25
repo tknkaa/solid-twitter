@@ -44,10 +44,12 @@ export default function Home() {
       <Suspense fallback={<p>Loading...</p>}>
         <For each={posts()}>
           {(post) => (
-            <div>
+            <div class="post-card" classList={{ "post-liked": !!post.likedByMe }}>
               <p>{post.userName}</p>
               <p>{post.content}</p>
-              <button onClick={() => toggleLikeAction(post.id)}>いいね</button>
+              <button class="like-button" classList={{ liked: !!post.likedByMe }} onClick={() => toggleLikeAction(post.id)}>
+                {post.likedByMe ? "いいねを取り消す" : "いいね"}
+              </button>
               <Show when={currentUser()?.id === post.userId}>
                 <button onClick={() => deletePostAction(post.id)}>削除</button>
               </Show>
